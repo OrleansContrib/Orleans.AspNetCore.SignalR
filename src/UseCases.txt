@@ -1,0 +1,38 @@
+SEND CONNECTION
+Below are different sources for how to call SendConnection(...) in OrleansHubLifetimeManager.
+
+(A) Hub
+
+Clients.Client(Context.ConnectionId).SendAsync(method, args, cancellationToken);
+
+If connectionId is local
+  Send message to local connection
+Else
+  Route message to ConnectionGrain
+  Route message to the hub server (using GrainObservers or Streams)
+  Send message to local connection
+
+Considerations: can we route to the right server/OrleansHubLifetimeManager without the ConnectionGrain?
+Adding heubId/serverId to the connectionId could help, but we can NOT change how the connectionId is generated withing SignalR. This means there will be two different types of connectionIds which is not good
+Perhaps we can have an overload on SendConnection where it's possible to provide serverId IF we have it, if not, the message will be routed via ConnectionGrain
+
+(B) Backplane grain (Grains from Orleans.AspNetCore.SignalR package such as GroupGrain, UserGrain etc)
+
+If hubId is known
+  Route message to the connection server (using GrainObservers or Streams)
+  Send message to local connection
+Else
+  Route message to ConnectionGrain
+  Route message to the hub server (using GrainObservers or Streams)
+  Send message to local connection
+
+(C) From external grain using GetHub extension 
+This option is perhaps not useful anymore, since we don't keep track on specific hubs, only connection ids and server ids
+
+(D) From external grain using GetGrain Use an extension 
+that will either route message to a server directly
+Or via ConnectionGrain
+
+GrainFactory.GetGrain<IConnectionGrain>
+Requires referencing Orleans.AspNetCore.SignalR.Core project
+

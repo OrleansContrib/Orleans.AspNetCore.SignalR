@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -6,6 +6,17 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Orleans.AspNetCore.SignalR.Core\Orleans.AspNetCore.SignalR.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.Orleans.Core" Version="3.3.0" />
+    <PackageReference Include="Microsoft.Orleans.Core.Abstractions" Version="3.3.0" />
+    <PackageReference Include="Microsoft.Orleans.CodeGenerator.MSBuild" Version="3.3.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Orleans.Runtime.Abstractions" Version="3.3.0" />
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,9 @@
+Disadvantages with SignalR.Orleans
+
+Code is more complicated than necessary
+- ConnectionGrain is not really representing a connection, but a collection of connections which is confusing
+- Sending ONE message to a group with 1000 connections means: 
+  * 1000 messages routed to 1000 ClientGrains 
+  * 1000 individual messages pushed to servers via streams
+  
+  A better solution could be to only send ONE message for each server that has a connection in the group

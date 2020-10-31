@@ -1,0 +1,21 @@
+Keep Orleans.SignalR name?
+
+
+LOCAL GRAIN PLACEMENT
+HubGrain and ConnectionGrain has the [PreferLocalPlacement] attribute. 
+This ensures (well 99.99%) that when we route a message to a connection
+
+
+CLEANUPS
+How to clean up connection grains when a server has not been able to shutdown correctly?
+- when using table storage I think we have a primary key (serverId?) and secondary key connectionId(). If a server goes down we can remove all connections with a certain severId
+- It's up to the storage to figure out?
+
+WRITE GRAIN STATE STRATEGY
+When should grain state be stored?
+
+
+HUB ID
+ServerId should be HubId, because the id represents the hub, not the full server.
+
+Instead of Guid, we use a string. HubId can be set from outside, which is good when testing and we want to have clear server hub name such as "Server1_UserHub" and "Server2_UserHub"
